@@ -135,3 +135,8 @@ npm run dev → start backend with nodemon
 node seed.js → reset DB and insert sample data
 
 npm run build → production build
+
+ 
+Docker- Its a platform to used to build, shine and runs inside the container. I have learned Docker concepts and practiced with examples, but I couldn’t install it on my current laptop due to system restrictions. However, I understand containerization, how Docker images and containers work, and how to use Docker in real-world projects.
+
+Redis - Redis is an in-memory database mainly used for fast data storage and retrieval. It helps applications run faster by handling caching, sessions, and quick lookups.  I have learned Redis concepts and practiced with examples, but I couldn’t install it on my current laptop due to system restrictions. However, I understand how Redis works as an in-memory data store, its use cases for caching, session management, and improving performance in real-world projects.
