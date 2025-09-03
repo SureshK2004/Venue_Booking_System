@@ -15,26 +15,9 @@ Venue.init(
     city: { type: DataTypes.STRING(255), allowNull: false },
     description: { type: DataTypes.TEXT, allowNull: false },
     images: { type: DataTypes.JSON, allowNull: false, defaultValue: [] },
-    rating: {
-      type: DataTypes.DECIMAL(3, 2),
-      allowNull: false,
-      defaultValue: 4.5,
-    },
-    priceRangeMin: {
-      type: DataTypes.DECIMAL(10, 2),
-      allowNull: false,
-      defaultValue: 100,
-    },
-    priceRangeMax: {
-      type: DataTypes.DECIMAL(10, 2),
-      allowNull: false,
-      defaultValue: 500,
-    },
-    // 👇 Add this new field
-    capacity: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
+    rating: { type: DataTypes.DECIMAL(3, 2), allowNull: false, defaultValue: 4.5 },
+    priceRangeMin: { type: DataTypes.DECIMAL(10, 2), allowNull: false, defaultValue: 100 },
+    priceRangeMax: { type: DataTypes.DECIMAL(10, 2), allowNull: false, defaultValue: 500 },
   },
-  { sequelize, tableName: "venues" }
+  { sequelize, tableName: "venues" },
 )

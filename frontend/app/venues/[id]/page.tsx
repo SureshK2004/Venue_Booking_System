@@ -77,7 +77,7 @@ export default async function VenueDetailPage({
           </div>
 
           {/* Sidebar (Capacity + Price + Booking) */}
-          <div className="rounded-lg border p-4">
+            <div className="rounded-lg border p-4">
             <div className="space-y-2 text-sm">
               <div className="flex items-center justify-between">
                 <span className="text-muted-foreground">Capacity Range</span>
@@ -93,10 +93,11 @@ export default async function VenueDetailPage({
                 <span className="text-muted-foreground">Price</span>
                 <span className="font-medium">
                   {venue.priceRangeMin != null
-                    ? `$${venue.priceRangeMin}${venue.priceRangeMax
-                      ? " - $" + venue.priceRangeMax
-                      : ""
-                    }`
+                    ? `$${venue.priceRangeMin}${
+                        venue.priceRangeMax
+                          ? " - $" + venue.priceRangeMax
+                          : ""
+                      }`
                     : "-"}
                 </span>
               </div>

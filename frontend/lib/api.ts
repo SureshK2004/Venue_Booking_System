@@ -28,8 +28,8 @@ export type BookingResponse = {
 function getApiBaseUrl() {
   // Supports both client and server usage
   const isClient = typeof window !== "undefined"
-  const clientBase = isClient ? process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000" : ""
-  const serverBase = process.env.API_BASE_URL || process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000"
+  const clientBase = isClient ? process.env.NEXT_PUBLIC_API_BASE_URL || "https://venuebackend.vercel.app" : ""
+  const serverBase = process.env.API_BASE_URL || process.env.NEXT_PUBLIC_API_BASE_URL || "https://venuebackend.vercel.app"
   const base = isClient ? clientBase : serverBase
   if (!base) {
     console.warn("[api] Missing API base URL. Set NEXT_PUBLIC_API_BASE_URL (and optionally API_BASE_URL).")
