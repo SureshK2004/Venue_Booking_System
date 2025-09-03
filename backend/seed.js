@@ -69,6 +69,7 @@ async function seed() {
       description: "Beautiful outdoor venue surrounded by nature.",
       images: [
         "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&auto=format&fit=crop&q=60",
+      
         "https://images.unsplash.com/photo-1532634922-8fe0b757fb13?w=800&auto=format&fit=crop&q=60",
         "https://images.unsplash.com/photo-1532634922-8fe0b757fb13?w=800&auto=format&fit=crop&q=60"
       ],

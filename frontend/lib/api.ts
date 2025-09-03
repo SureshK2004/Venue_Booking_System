@@ -27,30 +27,15 @@ export type BookingResponse = {
 
 function getApiBaseUrl() {
   // Supports both client and server usage
-  const isClient = typeof window !== "undefined";
-
-  const clientBase =
-    process.env.NEXT_PUBLIC_API_BASE_URL ||
-    "https://venue-booking-system-backend.vercel.app/api";
-
-  const serverBase =
-    process.env.API_BASE_URL ||
-    process.env.NEXT_PUBLIC_API_BASE_URL ||
-    "https://venue-booking-system-backend.vercel.app/api";
-
-  const base = isClient ? clientBase : serverBase;
-
+  const isClient = typeof window !== "undefined"
+  const clientBase = isClient ? process.env.NEXT_PUBLIC_API_BASE_URL || "https://venue-booking-system-backend.vercel.app/api" : ""
+  const serverBase = process.env.API_BASE_URL || process.env.NEXT_PUBLIC_API_BASE_URL || "https://venue-booking-system-backend.vercel.app/api"
+  const base = isClient ? clientBase : serverBase
   if (!base) {
-    console.warn(
-      "[api] Missing API base URL. Set NEXT_PUBLIC_API_BASE_URL (and optionally API_BASE_URL)."
-    );
+    console.warn("[api] Missing API base URL. Set NEXT_PUBLIC_API_BASE_URL (and optionally API_BASE_URL).")
   }
-
-  return base.replace(/\/+$/, "");
+  return base.replace(/\/+$/, "")
 }
-
-export default getApiBaseUrl;
-
 
 export function apiUrl(path: string) {
   return `${getApiBaseUrl()}${path.startsWith("/") ? path : `/${path}`}`

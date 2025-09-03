@@ -1,6 +1,8 @@
-import { Sequelize } from "sequelize"
-import dotenv from "dotenv"
-dotenv.config()
+import { Sequelize } from "sequelize";
+import mysql2 from "mysql2";   
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export const sequelize = new Sequelize(
   process.env.DB_NAME || "railway",
@@ -10,6 +12,7 @@ export const sequelize = new Sequelize(
     host: process.env.DB_HOST || "localhost",
     port: Number(process.env.DB_PORT || 3306),
     dialect: "mysql",
+    dialectModule: mysql2,
     logging: false,
     timezone: "+00:00",
     pool: {
@@ -19,14 +22,14 @@ export const sequelize = new Sequelize(
       idle: 10000,
     },
   }
-)
+);
 
 export async function connectDB() {
   try {
-    await sequelize.authenticate()
-    console.log("[DB] ✅ Connection established")
+    await sequelize.authenticate();
+    console.log("[DB] ✅ Connection established");
   } catch (err) {
-    console.error("[DB] ❌ Connection error:", err.message)
-    process.exit(1)
+    console.error("[DB] ❌ Connection error:", err.message);
+    process.exit(1);
   }
 }
