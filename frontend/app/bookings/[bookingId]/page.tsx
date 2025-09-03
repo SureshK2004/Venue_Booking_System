@@ -15,9 +15,12 @@ type Booking = {
   totalPrice?: number
 }
 
+const bookingFetcher = (path: string) => privateGet<Booking>(path)
+
 function useBooking(id: string) {
-  return useSWR<Booking>(id ? `/api/bookings/${id}` : null, (path) => privateGet<Booking>(path))
+  return useSWR<Booking>(id ? `/api/bookings/${id}` : null, bookingFetcher)
 }
+
 
 export default function BookingConfirmPage({ params }: { params: { bookingId: string } }) {
   const { data, error, isLoading } = useBooking(params.bookingId)

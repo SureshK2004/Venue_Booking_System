@@ -31,51 +31,50 @@ async function seed() {
 
     console.log("👤 Users inserted");
 
-    // Venues (create one by one for MySQL)
-    const grand = await Venue.create({
+    // Venues
+    const grandPalace = await Venue.create({
       name: "Grand Palace",
       address: "123 Main St",
       city: "Metropolis",
       description: "A luxurious venue perfect for weddings and conferences.",
       images: [
-        "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1200",
-        "https://images.unsplash.com/photo-1528909514045-2fa4ac7a08ba?q=80&w=1200",
-        "https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1200",
+        "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&auto=format&fit=crop&q=60",
+        "https://images.unsplash.com/photo-1528909514045-2fa4ac7a08ba?w=800&auto=format&fit=crop&q=60",
+        "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&auto=format&fit=crop&q=60",
       ],
       rating: 4.7,
       priceRangeMin: 150,
       priceRangeMax: 600,
     });
 
-    const grands = await Venue.create({
-      name: "Grand Palace",
-      address: "123 Main St, Metropolis",
-      description: "A luxurious venue perfect for weddings and conferences.",
-      capacity: 500,
-       city: "Gotham",
-      price: 450, // single price field instead of min/max
-      images: [
-        "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1200",
-        "https://images.unsplash.com/photo-1528909514045-2fa4ac7a08ba?q=80&w=1200",
-        "https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1200",
-      ],
-      image:
-        "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1200", // fallback if API only needs one
-    });
-
-    const center = await Venue.create({
+    const conventionCenter = await Venue.create({
       name: "City Convention Center",
-      address: "456 Broad Ave",
+      address: "456 Broad Avenue",
       city: "Gotham",
       description: "Modern spaces for corporate events and trade shows.",
       images: [
-        "https://images.unsplash.com/photo-1557800636-894a64c1696f?q=80&w=1200",
-        "https://images.unsplash.com/photo-1515165562835-c3b8c1e0b653?q=80&w=1200",
-        "https://images.unsplash.com/photo-1531058020387-3be344556be6?q=80&w=1200",
+        "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800&auto=format&fit=crop&q=60",
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=60",
+        "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=800&auto=format&fit=crop&q=60"
       ],
       rating: 4.4,
       priceRangeMin: 120,
       priceRangeMax: 500,
+    });
+
+    const gardenPavilion = await Venue.create({
+      name: "Garden Pavilion",
+      address: "789 Nature Road",
+      city: "Greenville",
+      description: "Beautiful outdoor venue surrounded by nature.",
+      images: [
+        "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&auto=format&fit=crop&q=60",
+        "https://images.unsplash.com/photo-1532634922-8fe0b757fb13?w=800&auto=format&fit=crop&q=60",
+        "https://images.unsplash.com/photo-1532634922-8fe0b757fb13?w=800&auto=format&fit=crop&q=60"
+      ],
+      rating: 4.5,
+      priceRangeMin: 80,
+      priceRangeMax: 300,
     });
 
     console.log("🏢 Venues inserted");
@@ -83,8 +82,9 @@ async function seed() {
     // Halls
     const halls = await Hall.bulkCreate(
       [
+        // Halls for Grand Palace
         {
-          venueId: grand.id,
+          venueId: grandPalace.id,
           name: "Emerald Hall",
           capacityMin: 50,
           capacityMax: 200,
@@ -92,16 +92,17 @@ async function seed() {
           amenities: ["Stage", "Sound System", "Catering"],
         },
         {
-          venueId: grand.id,
+          venueId: grandPalace.id,
           name: "Crystal Hall",
           capacityMin: 30,
           capacityMax: 120,
           pricePerHour: 180,
           amenities: ["Projector", "WiFi"],
         },
-
+        
+        // Halls for Convention Center
         {
-          venueId: center.id,
+          venueId: conventionCenter.id,
           name: "Auditorium A",
           capacityMin: 100,
           capacityMax: 500,
@@ -109,29 +110,38 @@ async function seed() {
           amenities: ["Theater Seating", "Lighting Rig"],
         },
         {
-          venueId: grands.id,
-          name: "Auditorium A",
-          capacityMin: 100,
-          capacityMax: 500,
-          pricePerHour: 300,
-          amenities: ["Theater Seating", "Lighting Rig"],
+          venueId: conventionCenter.id,
+          name: "Conference Room B",
+          capacityMin: 20,
+          capacityMax: 80,
+          pricePerHour: 120,
+          amenities: ["Projector", "Whiteboard", "WiFi"],
         },
+        
+        // Halls for Garden Pavilion
+        {
+          venueId: gardenPavilion.id,
+          name: "Outdoor Garden",
+          capacityMin: 50,
+          capacityMax: 300,
+          pricePerHour: 200,
+          amenities: ["Outdoor Setup", "Dance Floor", "Lighting"],
+        }
       ],
       { returning: true }
     );
-    await Promise.all(halls.map((h) => h.reload())); // reload IDs in MySQL
 
     console.log("🏟️ Halls inserted");
 
-    // Booking
+    // Bookings
     await Booking.create({
-      venueId: grand.id,
+      venueId: grandPalace.id,
       hallId: halls[0].id,
-      customerName: "Sample Customer",
+      customerName: "John Smith",
       customerPhone: "1234567890",
-      customerEmail: "customer@example.com",
+      customerEmail: "john.smith@example.com",
       eventDate: "2025-09-15",
-      startTime: "10:00:00", // MySQL TIME expects HH:MM:SS
+      startTime: "10:00:00",
       endTime: "12:00:00",
       guestCount: 120,
       totalAmount: 500,
@@ -139,10 +149,25 @@ async function seed() {
       userId: user.id,
     });
 
-    console.log("📅 Booking inserted");
+    await Booking.create({
+      venueId: conventionCenter.id,
+      hallId: halls[2].id,
+      customerName: "Tech Conference Inc.",
+      customerPhone: "9876543210",
+      customerEmail: "events@techconf.com",
+      eventDate: "2025-10-20",
+      startTime: "09:00:00",
+      endTime: "17:00:00",
+      guestCount: 350,
+      totalAmount: 2100,
+      status: "confirmed",
+      userId: user.id,
+    });
+
+    console.log("📅 Bookings inserted");
 
     console.log("[Seed] ✅ Done");
-    await sequelize.close(); // ✅ safely close DB connection
+    await sequelize.close();
   } catch (e) {
     console.error("❌ Seed error:", e);
     await sequelize.close();
